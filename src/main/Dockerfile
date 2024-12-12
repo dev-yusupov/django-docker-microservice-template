@@ -26,12 +26,6 @@ RUN python3 -m venv /.venv/ && \
     && adduser --disabled-password --no-create-home django-user
 
 # Copy the content of the local src directory to the working directory
-COPY ./app /app/
-RUN ls -la /app
-
-RUN echo Main Service is running on http://localhost:9000
+COPY ./app /app
 
 ENV PATH="/.venv/bin/:$PATH"
-
-# Command to run on container start
-CMD ["bash", "-c", "source /.venv/bin/activate && python3 manage.py runserver 0.0.0.0:9000"]
