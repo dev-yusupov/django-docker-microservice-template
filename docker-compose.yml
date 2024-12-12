@@ -19,6 +19,24 @@ services:
       python manage.py migrate &&
       python manage.py runserver 0.0.0.0:9000"
 
+  authentication:
+    build:
+      context: ./src/authentication
+      dockerfile: Dockerfile
+    ports:
+      - "7000:7000"
+    depends_on:
+      - db-authentication
+    volumes:
+      - ./src/authentication/app:/app
+    env_file:
+      - ./src/authentication/.env
+    command: >
+      sh -c "
+      python manage.py wait_for_db &&
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:7000"
+
   db-main:
     image: postgres:latest
     env_file:
@@ -27,7 +45,21 @@ services:
       - "5432:5432"
     volumes:
       - ./.db/main:/var/lib/postgresql/data
+
+  db-authentication:
+    image: postgres:latest
+    env_file:
+      - ./src/authentication/.env
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./.db/authentication:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: authentication_service
+      POSTGRES_PASSWORD: 2024auth_service
+      POSTGRES_DB: authentication_db
       
 volumes:
   postgres_data_main:
   venv:
+  postgres_data_authentication:
