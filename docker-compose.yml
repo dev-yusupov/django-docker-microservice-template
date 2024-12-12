@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  main:
+    build:
+      context: ./src/main
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000"
+    depends_on:
+      - db-main
+    volumes:
+      - ./app:/app
+
+
+  db-main:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: main_service
+      POSTGRES_PASSWORD: 2024mainservice
+      POSTGRES_DB: main_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.db/main:/var/lib/postgresql/data
+      
+volumes:
+  postgres_data_main:
+  venv:
