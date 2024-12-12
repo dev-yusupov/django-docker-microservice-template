@@ -58,6 +58,19 @@ services:
       POSTGRES_USER: authentication_service
       POSTGRES_PASSWORD: 2024auth_service
       POSTGRES_DB: authentication_db
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx:/etc/nginx/conf.d
+    depends_on:
+      - main
+      - authentication
+    command: >
+      sh -c "
+      nginx -g 'daemon off;'"
       
 volumes:
   postgres_data_main:
