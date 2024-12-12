@@ -69,9 +69,8 @@ This template is designed to be generic and adaptable to any type of application
 
 **Sample Endpoints**:
 
-- `/api/v1/accounts/*` - Routes requests to the Authentication Service.
-- `/api/v1/main/*` - Routes requests to the Main Service.
-- `/api/v1/analytics/*` - Routes requests to the Analytics Service.
+- `accounts/*` - Routes requests to the Authentication Service.
+- `main/*` - Routes requests to the Main Service.
 
 ### 1.4. Analytics Service
 
